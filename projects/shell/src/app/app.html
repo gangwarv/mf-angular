@@ -1,0 +1,12 @@
+<header class="topbar">
+  <a class="brand" routerLink="/" aria-label="Seller workspace home">Seller workspace</a>
+  <nav aria-label="Main navigation">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/products" routerLinkActive="active">Products</a>
+    <a routerLink="/orders" routerLinkActive="active">Orders</a>
+  </nav>
+</header>
+
+<main class="page">
+  <router-outlet />
+</main>

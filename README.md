@@ -1,59 +1,66 @@
-# MfMseller
+# Seller workspace
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.2.
+An Angular microfrontend workspace for a simple seller portal. It uses
+[Angular Architects Native Federation](https://www.npmjs.com/package/@angular-architects/native-federation)
+to load the Products and Orders pages into the Shell at runtime.
 
-## Development server
+## Applications
 
-To start a local development server, run:
+| Application | Role | Shell route | Development URL |
+| --- | --- | --- | --- |
+| `shell` | Host application with the home page and top navigation | `/` | http://localhost:4200 |
+| `products` | Remote exposing the hardcoded product catalog table | `/products` | http://localhost:4201 |
+| `orders` | Remote exposing the hardcoded orders table | `/orders` | http://localhost:4202 |
 
-```bash
-ng serve
-```
+The Shell loads remote components through the `./Component` federation
+exposure. Products exposes `ProductsPage` and Orders exposes `OrdersPage`.
+The remote URLs are configured in
+[`projects/shell/public/federation.manifest.json`](./projects/shell/public/federation.manifest.json);
+each remote's exposed component is configured in its `federation.config.mjs`.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Run locally
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+Install dependencies once:
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Run each application in a separate terminal:
 
 ```bash
-ng test
+npm run start:shell
+npm run start:products
+npm run start:orders
 ```
 
-## Running end-to-end tests
+Open http://localhost:4200. The Shell navigation loads the remote pages without
+leaving the Shell URL. The standalone remote development URLs can also be
+opened directly.
 
-For end-to-end (e2e) testing, run:
+## Build
+
+Build the host and both remotes:
 
 ```bash
-ng e2e
+npx ng build shell
+npx ng build products
+npx ng build orders
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Tests
 
-## Additional Resources
+Run the workspace test suite:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm test
+```
+
+## Project layout
+
+```text
+projects/
+  shell/      Host app, home page, routes, and federation manifest
+  products/   Products remote app and exposed product page
+  orders/     Orders remote app and exposed orders page
+```

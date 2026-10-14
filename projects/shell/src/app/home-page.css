@@ -1,0 +1,99 @@
+.welcome {
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  color: #4263eb;
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.9rem;
+}
+
+h1 {
+  color: #152238;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.intro {
+  color: #687386;
+  font-size: 1.05rem;
+  margin: 1rem 0 0;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.section-card {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+  color: inherit;
+  display: flex;
+  gap: 1rem;
+  min-height: 100px;
+  padding: 1.25rem;
+  text-decoration: none;
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.section-card:hover {
+  border-color: #a9b8f8;
+  box-shadow: 0 8px 24px #253a7014;
+  transform: translateY(-2px);
+}
+
+.card-icon {
+  align-items: center;
+  background: #edf1ff;
+  border-radius: 10px;
+  color: #3554d1;
+  display: flex;
+  flex: 0 0 42px;
+  font-weight: 750;
+  height: 42px;
+  justify-content: center;
+}
+
+.orders-icon {
+  background: #e8f7f2;
+  color: #14805e;
+}
+
+.section-card strong,
+.section-card small {
+  display: block;
+}
+
+.section-card strong {
+  color: #152238;
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.section-card small {
+  color: #778194;
+  font-size: 0.87rem;
+}
+
+.arrow {
+  color: #8b95a5;
+  font-size: 1.35rem;
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
