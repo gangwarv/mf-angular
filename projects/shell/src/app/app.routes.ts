@@ -6,7 +6,7 @@ export const routes: Routes = [
   { path: '', component: HomePage },
   {
     path: 'products',
-    loadComponent: () => loadRemoteModule('products', './Component').then((m) => m.ProductsPage),
+    loadChildren: () => loadRemoteModule('products', './Routes').then((m) => m.routes),
   },
   {
     path: 'orders',

@@ -1,9 +1,10 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { ProductsFacadeService } from './store/products/products-facade.service';
 
 @Component({
   selector: 'app-products-page',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, AsyncPipe],
   template: `
     <header class="page-heading">
       <div>
@@ -11,7 +12,7 @@ import { Component } from '@angular/core';
         <h1>Products</h1>
         <p class="subtitle">A quick look at the items in your store.</p>
       </div>
-      <span class="count">{{ products.length }} products</span>
+      <span class="count">{{ (products$ | async)?.length }} products</span>
     </header>
 
     <div class="table-wrap">
@@ -26,7 +27,12 @@ import { Component } from '@angular/core';
           </tr>
         </thead>
         <tbody>
-          @for (product of products; track product.sku) {
+          @if((products$ | async)?.length === 0) {
+            <tr>
+              <td colspan="5" class="no-products" style="text-align: center;">Loading...</td>
+            </tr>
+          }
+          @for (product of products$ | async; track product.sku) {
             <tr>
               <td class="product-name">{{ product.name }}</td>
               <td>{{ product.sku }}</td>
@@ -42,8 +48,17 @@ import { Component } from '@angular/core';
   styleUrl: './products-page.css',
 })
 export class ProductsPage {
+  private readonly productsFacade = inject(ProductsFacadeService);
+  readonly products$ = this.productsFacade.products$;
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.productsFacade.addProducts(this.products);
+    }, 3000);
+  }
+
   protected readonly products = [
-    { name: 'Everyday Backpack', sku: 'BAG-001', category: 'Accessories', price: 59.99, stock: 24 },
+    { name: 'Everyday Backpack v2', sku: 'BAG-001', category: 'Accessories', price: 59.99, stock: 24 },
     {
       name: 'Ceramic Travel Mug',
       sku: 'MUG-014',
@@ -51,7 +66,7 @@ export class ProductsPage {
       price: 18.5,
       stock: 42,
     },
-    { name: 'Classic Cotton Tee', sku: 'APP-108', category: 'Apparel', price: 24, stock: 16 },
+    { name: 'Classic Cotton Tee v1', sku: 'APP-108', category: 'Apparel', price: 24, stock: 16 },
     {
       name: 'Wireless Desk Lamp',
       sku: 'HOM-220',
